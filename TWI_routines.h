@@ -25,7 +25,7 @@ void twi_init_presc(uint8_t twbr_value, uint8_t prescaler);
 void twistart(void);
 void twistop(void);
 void twiwrite(uint8_t data);
-uint8_t twiread(uint16_t ack);
+uint8_t twiread(uint8_t ack);
 
 uint8_t twiread_ACK(void);
 uint8_t twiread_NACK(void);

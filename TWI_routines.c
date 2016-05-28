@@ -82,7 +82,7 @@
 //Return    : Received byte.
 //Note      : This function seems to be smaller than separate ACK'ing and NACK'ing functions.
 //******************************************************************
-	uint8_t twiread(uint16_t ack) // nack 0
+	uint8_t twiread(uint8_t ack) // nack 0
 	{
 		TWCR = ack ?
 		  ((1 << TWINT) | (1 << TWEN) | (1 << TWEA))

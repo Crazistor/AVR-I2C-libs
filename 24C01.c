@@ -2,7 +2,7 @@
 // ****** FUNCTIONS FOR I2C EEPROMs INTERFACING *******
 //**************************************************************
 //Compiler          : AVR-GCC
-//Target devices    : EEPROMs 24C32 - 24C512
+//Target devices    : EEPROMs 24C01 - 24C16
 //Author            : jnk0le@hotmail.com
 //                    https://github.com/jnk0le
 //Date              : 24 June 2015
@@ -10,16 +10,16 @@
 //**************************************************************
 
 #include "TWI_routines.h"
-#include "24C32.h"
+#include "24C01.h"
 
 //******************************************************************
 //Function  : To write single byte into EEPROM memory.
 //Arguments : 1. SLA_W device address.
-//          : 2. 16 bit internal address of the location to be written.
+//          : 2. 8 bit internal address of the location to be written.
 //          : 3. One byte of data to be written into EEPROM.
 //Return    :    none
 //******************************************************************
-	void eewrite(uint8_t device, uint16_t addr, uint8_t dat)
+	void eewrite(uint8_t device, uint8_t addr, uint8_t dat)
 	{
 		while(1)
 		{
@@ -31,7 +31,6 @@
 			twistop();
 		}
 
-		twiwrite(addr >> 8);
 		twiwrite(addr);
 
 		twiwrite(dat);
@@ -41,10 +40,10 @@
 //******************************************************************
 //Function  : To read single byte from the EEPROM memory.
 //Arguments : 1. SLA_W device address.
-//          : 2. 16 bit internal address of the location to read.
+//          : 2. 8 bit internal address of the location to read.
 //Return    :    Byte containing the read data.
 //******************************************************************
-	uint8_t eeread(uint8_t device, uint16_t addr)
+	uint8_t eeread(uint8_t device, uint8_t addr)
 	{
 		uint8_t dat;
 		
@@ -58,7 +57,6 @@
 			twistop();
 		}
 		
-		twiwrite(addr >> 8); 
 		twiwrite(addr); 
 
 		twistart();
@@ -73,11 +71,11 @@
 //******************************************************************
 //Function  : Read single byte from the EEPROM, into given location of system memory.
 //Arguments : 1. SLA_W device address.
-//          : 2. 16 bit internal address of the location to read.
+//          : 2. 8 bit internal address of the location to read.
 //          : 3. Pointer of the location to load byte from EEPROM.
 //Return    :    none
 //******************************************************************
-	void eereadto(uint8_t device, uint16_t addr, uint8_t *dat)
+	void eereadto(uint8_t device, uint8_t addr, uint8_t *dat)
 	{
 		while(1)
 		{
@@ -89,7 +87,6 @@
 			twistop();
 		}
 		
-		twiwrite(addr >> 8); 
 		twiwrite(addr); 
 
 		twistart();
@@ -102,16 +99,16 @@
 //******************************************************************
 //Function  : Write an EEPROM page from a given array.
 //Arguments : 1. SLA_W device address.
-//          : 2. 16 bit initial address of the location to write
+//          : 2. 8 bit initial address of the location to write
 //          : 3. Number of bytes to write.
 //          : 4. Pointer to array containing data.
 //Return    :    none
 //Note      : Page Write mode allows for multiple writes in one cycle, provided that all bytes
 //          : fits up to the end of the row, otherwise a condition known as 'roll-over' will occur.
 //          : That means the most significant memory address bits have to be the same, during one page write.
-//          : Check datasheet of specified memory, for more details about the row size (eg. 32 bytes for the C32 & C64, 64 for C128).
+//          : Check datasheet of specified memory, for more details about the row size (eg. 2 bytes for the C01, 8 for C04).
 //******************************************************************
-	void ee_write_page(uint8_t device, uint16_t addr, uint8_t len, uint8_t *buf)
+	void ee_write_page(uint8_t device, uint8_t addr, uint8_t len, uint8_t *buf)
 	{
 		while(1) // wait until device is unconciscious
 		{
@@ -123,7 +120,6 @@
 			twistop();
 		}
 		
-		twiwrite(addr >> 8);
 		twiwrite(addr);
 		
 		while(len--) twiwrite(*buf++);
@@ -134,12 +130,12 @@
 //******************************************************************
 //Function  : Read a burst of bytes from an EEPROM memory.
 //Arguments : 1. SLA_W device address.
-//          : 2. 16 bit initial address of the the location to read
+//          : 2. 8 bit initial address of the the location to read
 //          : 3. Number of bytes to read.
 //          : 4. Pointer to array which have to be filled with incoming data.
 //Return    :    none
 //******************************************************************
-	void ee_read_page(uint8_t device, uint16_t addr, uint16_t len, uint8_t *buf) 
+	void ee_read_page(uint8_t device, uint8_t addr, uint8_t len, uint8_t *buf) 
 	{
 		while(1)
 		{
@@ -151,12 +147,11 @@
 			twistop();
 		}
 		
-		twiwrite(addr >> 8);
 		twiwrite(addr);
 		
 		twistart();
 		twiwrite(device+1);
-
+		
 		while( --len )
 			*buf++ = twiread_ACK();
 		
