@@ -9,6 +9,7 @@
 //License           : MIT
 //**************************************************************
 
+#include <util/twi.h>
 #include "TWI_routines.h"
 #include "24C01.h"
 
