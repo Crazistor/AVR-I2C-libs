@@ -5,7 +5,7 @@
 //Target devices    : EEPROMs 24C01 - 24C16
 //Author            : jnk0le@hotmail.com
 //                    https://github.com/jnk0le
-//Date              : 24 June 2015
+//Date              : 28 May 2016
 //License           : MIT
 //**************************************************************
 

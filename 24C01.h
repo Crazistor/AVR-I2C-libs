@@ -8,8 +8,6 @@
 *  This library is distributed under MIT license terms                             *
 ************************************************************************************/
 
-#include <TWI_routines.h>
-
 void eewrite(uint8_t device, uint8_t addr, uint8_t dat);
 uint8_t eeread(uint8_t device, uint8_t addr);
 void eereadto(uint8_t device, uint8_t addr, uint8_t *dat);
