@@ -2,7 +2,6 @@
 // ****** FUNCTIONS FOR PCF EXPANDERS INTERFACING *******
 //**************************************************************
 //Compiler          : AVR-GCC
-//Target devices    : EEPROMs 24C32 - 24C512
 //Author            : jnk0le@hotmail.com
 //                    https://github.com/jnk0le
 //Date              : 18 June 2016
