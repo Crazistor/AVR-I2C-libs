@@ -123,7 +123,7 @@
 //Arguments : none
 //Return    : none
 //******************************************************************
-#if defined(_USART_H_) && defined(DEFAULT_TX_BUFFER_SIZE)
+#if defined(_USART_H_)
 	void scan(void)
 	{
 		uart_puts_P("Scanning for devices on i2c bus ...\r\n\n");
@@ -136,7 +136,7 @@
 			if(TW_STATUS == TW_MT_SLA_ACK )
 			{
 				uart_puts_P("Found device at address - 0x");
-				uart_put_hex(s);
+				uart_puthex(s);
 				uart_puts_P(" (<< 1 for SLA_W) \t 0b");
 				uart_putintr(s, 2);
 				uart_puts_P(" 0\r\n");
