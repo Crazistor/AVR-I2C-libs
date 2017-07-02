@@ -9,11 +9,10 @@
  ************************************************************************************/
  
 #ifndef __OPTIMIZE__
-	#warning "Compiler optimizations disabled; functions from TWI_routines.h won't work as designed"
 #endif
 
 #ifndef F_CPU
-	#error F_CPU is undefined, TWI cannot work correctly without this parametr
+	#error F_CPU is undefined, TWI may not work correctly without this parametr
 #endif
  
 #define TWBR_CALC(speed) ( (F_CPU / speed) - 16UL ) / 2UL
